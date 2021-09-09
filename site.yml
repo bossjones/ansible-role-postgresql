@@ -100,7 +100,6 @@
       with_items:
         - /var/run/postgresql
 
-
     - name: Update apt cache.
       apt: update_cache=true cache_valid_time=600
       changed_when: false
@@ -111,6 +110,13 @@
         name: "{{ my__postgresql_packages }}"
         state: present
 
+      # sudo systemctl start postgresql@12-main.service
+
+    - name: Ensure PostgreSQL is started and enabled on boot.
+      service:
+        name: "postgresql@12-main.service"
+        state: "restarted"
+        enabled: true
 
   roles:
     - role: ../
