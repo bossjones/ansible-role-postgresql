@@ -85,7 +85,7 @@
         - ( ansible_distribution == 'Fedora' and ansible_distribution_major_version >= '30') or
           ( ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8')
 
-    - name: Ensure PostgreSQL unix socket dirs exist.
+    - name: PRE TASK Ensure PostgreSQL unix socket dirs exist.
       file:
         path: "{{ item }}"
         state: directory

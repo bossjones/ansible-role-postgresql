@@ -1,5 +1,5 @@
 reset:
-	ansible-playbook -i "localhost," -c local reset.yml
+	ansible-playbook -vvvv -i "localhost," -c local reset.yml
 
 provision:
-	ansible-playbook -i "localhost," -c local site.yml
+	ansible-playbook -vvvv -i "localhost," -c local site.yml
