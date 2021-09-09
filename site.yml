@@ -8,6 +8,10 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
     postgresql_python_library: python3-psycopg2
+    my__postgresql_packages:
+    - postgresql
+    - postgresql-contrib
+    - libpq-dev
     postgresql_global_config_options:
         - option: listen_addresses
           value: '*'
@@ -101,6 +105,12 @@
       apt: update_cache=true cache_valid_time=600
       changed_when: false
       when: ansible_os_family == 'Debian'
+
+    - name: Ensure PostgreSQL packages are installed.
+      apt:
+        name: "{{ my__postgresql_packages }}"
+        state: present
+
 
   roles:
     - role: ../
