@@ -1,0 +1,8 @@
+{
+  "files.exclude": {
+    "*.retry": "explorerExcludedFiles",
+    "*/__pycache__": "explorerExcludedFiles",
+    "*.pyc": "explorerExcludedFiles",
+    ".cache": "explorerExcludedFiles"
+  }
+}

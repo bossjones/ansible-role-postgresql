@@ -1,0 +1,94 @@
+# USAGE: ansible-playbook -i "localhost," -c local ~/dev/ansible-role-postgresql/reset.yml
+---
+- name: Provision posgres
+  hosts: all
+  become: true
+
+  vars:
+    postgresql_reset: true
+    ansible_python_interpreter: /usr/bin/python3
+    postgresql_python_library: python3-psycopg2
+  #   postgresql_global_config_options:
+  #       - option: listen_addresses
+  #         value: '*'
+  #   postgresql_hba_entries:
+  #   - { type: local, database: all, user: postgres, auth_method: peer }
+  #   - { type: local, database: all, user: all, auth_method: peer }
+  #   - { type: host, database: all, user: all, address: '127.0.0.1/32', auth_method: md5 }
+  #   - { type: host, database: all, user: all, address: '::1/128', auth_method: md5 }
+  #   - { type: host, database: all, user: all, address: '192.168.1.0/16', auth_method: trust }
+
+  #   postgresql_databases:
+  #     - name: kubernetes
+  #       # lc_collate: # defaults to 'en_US.UTF-8'
+  #       # lc_ctype: # defaults to 'en_US.UTF-8'
+  #       # encoding: # defaults to 'UTF-8'
+  #       # template: # defaults to 'template0'
+  #       login_host: "192.168.1.67" # defaults to 'localhost'
+  #       login_password: "password" # defaults to not set
+  #       # login_user: # defaults to '{{ postgresql_user }}'
+  #       # login_unix_socket: # defaults to 1st of postgresql_unix_socket_directories
+  #       port: 5432 # defaults to not set
+  #       # owner: # defaults to postgresql_user
+  #       # state: # defaults to 'present'
+  #     - name: k3s
+  #       # lc_collate: # defaults to 'en_US.UTF-8'
+  #       # lc_ctype: # defaults to 'en_US.UTF-8'
+  #       # encoding: # defaults to 'UTF-8'
+  #       # template: # defaults to 'template0'
+  #       login_host: "192.168.1.67" # defaults to 'localhost'
+  #       login_password: "password" # defaults to not set
+  #       # login_user: # defaults to '{{ postgresql_user }}'
+  #       # login_unix_socket: # defaults to 1st of postgresql_unix_socket_directories
+  #       port: 5432 # defaults to not set
+  #       # owner: # defaults to postgresql_user
+  #       # state: # defaults to 'present'
+  #   postgresql_users:
+  #     - name: postgres
+  #       password: "password"
+  #       login_password: "password"
+  #     - name: pi
+  #       password: "password"
+  #       login_password: "password"
+  #   postgres_users_no_log: false
+
+  # pre_tasks:
+  #   # The Fedora 30+ container images have only C.UTF-8 installed
+  #   - name: Set database locale if using Fedora 30+ or RedHat 8+
+  #     set_fact:
+  #       postgresql_databases:
+  #         - name: kubernetes
+  #           # lc_collate: # defaults to 'en_US.UTF-8'
+  #           # lc_ctype: # defaults to 'en_US.UTF-8'
+  #           # encoding: # defaults to 'UTF-8'
+  #           # template: # defaults to 'template0'
+  #           login_host: "192.168.1.67" # defaults to 'localhost'
+  #           login_password: "password" # defaults to not set
+  #           # login_user: # defaults to '{{ postgresql_user }}'
+  #           # login_unix_socket: # defaults to 1st of postgresql_unix_socket_directories
+  #           port: 5432 # defaults to not set
+  #           # owner: # defaults to postgresql_user
+  #           # state: # defaults to 'present'
+  #         - name: k3s
+  #           # lc_collate: # defaults to 'en_US.UTF-8'
+  #           # lc_ctype: # defaults to 'en_US.UTF-8'
+  #           # encoding: # defaults to 'UTF-8'
+  #           # template: # defaults to 'template0'
+  #           login_host: "192.168.1.67" # defaults to 'localhost'
+  #           login_password: "password" # defaults to not set
+  #           # login_user: # defaults to '{{ postgresql_user }}'
+  #           # login_unix_socket: # defaults to 1st of postgresql_unix_socket_directories
+  #           port: 5432 # defaults to not set
+  #           # owner: # defaults to postgresql_user
+  #           # state: # defaults to 'present'
+  #     when:
+  #       - ( ansible_distribution == 'Fedora' and ansible_distribution_major_version >= '30') or
+  #         ( ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8')
+
+  #   - name: Update apt cache.
+  #     apt: update_cache=true cache_valid_time=600
+  #     changed_when: false
+  #     when: ansible_os_family == 'Debian'
+
+  roles:
+    - role: ../

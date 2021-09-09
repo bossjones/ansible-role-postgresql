@@ -1,0 +1,30 @@
+---
+- name: Stop PostgreSQL
+  service:
+    name: "{{ postgresql_daemon }}"
+    state: stopped
+
+# - name: Ensure PostgreSQL Python libraries are removed.
+#   apt:
+#     name: "{{ postgresql_python_library }}"
+#     state: absent
+
+- name: Ensure PostgreSQL packages are removed.
+  apt:
+    name: "{{ postgresql_packages }}"
+    state: absent
+
+- name: Ensure all configured locales are absent.
+  locale_gen: "name={{ item }} state=absent"
+  with_items: "{{ postgresql_locales }}"
+  register: locale_gen_result
+
+- name: Ensure PostgreSQL data directory is removed.
+  file:
+    path: "{{ postgresql_data_dir }}"
+    state: absent
+
+- name: Remove /etc/profile.d/postgres.sh
+  file:
+    path: "/etc/profile.d/postgres.sh"
+    state: absent
