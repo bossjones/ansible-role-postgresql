@@ -24,7 +24,7 @@
     path: "{{ postgresql_data_dir }}"
     state: absent
 
-- name: Remove /etc/profile.d/postgres.sh
-  file:
-    path: "/etc/profile.d/postgres.sh"
-    state: absent
+# - name: Remove /etc/profile.d/postgres.sh
+#   file:
+#     path: "/etc/profile.d/postgres.sh"
+#     state: absent
