@@ -85,6 +85,18 @@
         - ( ansible_distribution == 'Fedora' and ansible_distribution_major_version >= '30') or
           ( ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8')
 
+    - name: Ensure PostgreSQL unix socket dirs exist.
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: "postgres"
+        group: "postgres"
+        mode: >-
+          {{ __postgresql_unix_socket_directories_mode | default('02775') }}
+      with_items:
+        - /var/run/postgresql
+
+
     - name: Update apt cache.
       apt: update_cache=true cache_valid_time=600
       changed_when: false
