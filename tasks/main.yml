@@ -1,19 +1,25 @@
 ---
 # Variable configuration.
-- include_tasks: variables.yml
-- include_tasks: reset.yml
+- name: variables
+  include_tasks: variables.yml
+- name: reset
+  include_tasks: reset.yml
   when: ansible_os_family == 'Debian' and postgresql_reset | bool
 
 # Setup/install tasks.
-- include_tasks: setup-RedHat.yml
+- name: setup-RedHat
+  include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat' and not postgresql_reset
 
-- include_tasks: setup-Debian.yml
+- name: setup-Debian
+  include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian' and not postgresql_reset
 
-- include_tasks: initialize.yml
+- name: initialize
+  include_tasks: initialize.yml
   when: not postgresql_reset
-- include_tasks: configure.yml
+- name: configure
+  include_tasks: configure.yml
   when: not postgresql_reset
 
 - name: Ensure PostgreSQL is started and enabled on boot.
@@ -24,9 +30,12 @@
   when: not postgresql_reset
 
 # Configure PostgreSQL.
-- import_tasks: users.yml
+- name: users
+  import_tasks: users.yml
   when: not postgresql_reset
-- import_tasks: databases.yml
+- name: databases
+  import_tasks: databases.yml
   when: not postgresql_reset
-- import_tasks: users_props.yml
+- name: users_props
+  import_tasks: users_props.yml
   when: not postgresql_reset
